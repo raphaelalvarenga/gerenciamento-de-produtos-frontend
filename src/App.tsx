@@ -1,5 +1,6 @@
 import React from "react";
+import ListProducts from "./views/ListProducts";
 
-const App = () => <h1>App.tsx</h1>
+const App = () => <ListProducts />
 
 export default App;
