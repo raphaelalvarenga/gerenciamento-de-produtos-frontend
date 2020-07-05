@@ -6,7 +6,6 @@ export interface ProductInterface {
     description: string;
     category: string;
     price: string;
-    storage: number;
 }
 
 export interface ProductRequestParamsList {
