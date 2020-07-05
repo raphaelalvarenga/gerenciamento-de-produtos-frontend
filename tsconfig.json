@@ -6,6 +6,8 @@
       "dom.iterable",
       "esnext"
     ],
+    "rootDir": "src",
+    "outDir": "../heroku/gerenciamento-de-produtos-fron",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
