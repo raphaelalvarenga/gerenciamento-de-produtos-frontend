@@ -4,6 +4,7 @@ import Routes from "./components/Routes";
 import { BrowserRouter, Link } from "react-router-dom";
 import { Drawer, List, PageHeader, Button } from "antd";
 import { MenuOutlined, PoweroffOutlined } from "@ant-design/icons";
+import auth from "./routines/auth";
 
 const App: FunctionComponent = () => {
 
@@ -16,7 +17,7 @@ const App: FunctionComponent = () => {
     return (
         <BrowserRouter>
 
-            <PageHeader
+            {auth() && <PageHeader
                 className = "site-page-header"
                 title = {
                     <Button
@@ -36,7 +37,7 @@ const App: FunctionComponent = () => {
                         size = "large"
                     />
                 ]}
-            />
+            />}
 
             <Drawer
                 title = "Hello, 'User'!"
