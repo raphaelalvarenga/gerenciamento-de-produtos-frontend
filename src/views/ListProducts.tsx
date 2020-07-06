@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FunctionComponent } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
-import { PageHeader, Button, Drawer } from "antd";
+import { PageHeader, Button } from "antd";
 import { PoweroffOutlined } from "@ant-design/icons";
 
-const ListProducts = () => {
+const ListProducts: FunctionComponent = () => {
 
     const [products, setProducts] = useState<ProductInterface[]>([]);
 
