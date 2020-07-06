@@ -1,8 +1,6 @@
 import React, { useEffect, useState, FunctionComponent } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
-import { PageHeader, Button } from "antd";
-import { PoweroffOutlined } from "@ant-design/icons";
 
 const ListProducts: FunctionComponent = () => {
 
@@ -40,16 +38,7 @@ const ListProducts: FunctionComponent = () => {
         setProducts(response.params);
     }
     
-    return (
-        <PageHeader
-            className = "site-page-header"
-            title = "Teste"
-            subTitle="This is a subtitle"
-            extra = {[
-                <Button key = "1" type = "text" shape = "circle" danger icon = {<PoweroffOutlined />} />
-            ]}
-        />
-    )
+    return <h1>Products List Screen</h1>
 }
 
 export default ListProducts;
