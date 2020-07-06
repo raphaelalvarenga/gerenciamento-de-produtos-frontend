@@ -1,6 +1,6 @@
 import React from "react";
 import ListProducts from "./views/ListProducts";
-import './App.css';
+import './assets/styles.css';
 
 const App = () => <ListProducts />
 
