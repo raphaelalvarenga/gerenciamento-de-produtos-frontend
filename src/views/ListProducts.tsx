@@ -6,6 +6,7 @@ import auth from "../routines/auth";
 import { PageHeader, Button } from "antd";
 import { MenuOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { RouteComponentProps } from "react-router-dom";
+import { List, Card } from "antd";
 
 const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
@@ -66,7 +67,20 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                     />
                 ]}
             />}
-            <h1>Products List Screen</h1>
+            <List
+                itemLayout = "horizontal"
+                loading = {products.length > 0 ? false : true}
+                dataSource = {products}
+                renderItem = {item => (
+                    <List.Item extra = {item.price}>
+                        <List.Item.Meta
+                            avatar={<img src = {require("../images/caravatar120x90.png")} />}
+                            title={item.name}
+                            description={item.description}
+                        />
+                    </List.Item>
+                )}
+            />
         </>
     )
 }

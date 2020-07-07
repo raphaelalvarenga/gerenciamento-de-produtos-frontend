@@ -6,6 +6,7 @@ export interface ProductInterface {
     description: string;
     category: string;
     price: string;
+    status: number;
 }
 
 export interface ProductRequestParamsList {
