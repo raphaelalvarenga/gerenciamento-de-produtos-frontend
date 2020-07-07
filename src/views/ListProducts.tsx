@@ -8,6 +8,7 @@ import { MenuOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "antd";
 import RequestInterface from "../interfaces/request-interface";
+import Modal from "antd/lib/modal/Modal";
 
 const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
@@ -206,7 +207,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         },
         {
             "idProduct": 25,
-            "name": "F-Series",
+            "name": "FSeries",
             "description": "1990",
             "category": "Ford",
             "price": "$940121.07",
@@ -253,7 +254,12 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
             "status": 1
         }
     ]);
-
+    
+    const [modal, setModal] = React.useState<{visible: boolean, product: ProductInterface}>({
+        visible: false, product: {
+            idProduct: 0, name: "", description: "", category: "", price: "", status: 0
+        }});
+        
     useEffect(() => {
         // getProducts()
     }, []);
@@ -366,7 +372,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 <Col span = {4} style = {{textAlign: "center"}}>
                                     <Space>
                                         <Button>Edit</Button>
-                                        <Button danger onClick = {() => deleteProduct(product)}>Delete</Button>
+                                        <Button danger onClick = {() => setModal({visible: true, product})}>Delete</Button>
                                     </Space>
                                 </Col>
                             </Row>
@@ -375,6 +381,22 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                     ))
                 }
             </div>
+            <Modal
+                title = "Alert"
+                visible = {modal.visible}
+                onOk = {() => {
+                    setModal({...modal, visible: false});
+                    deleteProduct(modal.product);
+                }}
+                onCancel = {() => setModal({...modal, visible: false})}
+            >
+                <p><b>Are you sure you want to delete this item?</b></p>
+                <p>{modal.product.idProduct}</p>
+                <p>{modal.product.name}</p>
+                <p>{modal.product.description}</p>
+                <p>{modal.product.category}</p>
+                <p>{modal.product.price}</p>
+            </Modal>
         </>
     )
 }
