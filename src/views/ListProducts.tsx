@@ -3,12 +3,14 @@ import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
 import config from "../routines/config";
 import auth from "../routines/auth";
-import { PageHeader, Button, Space, Input } from "antd";
-import { MenuOutlined, PoweroffOutlined, SearchOutlined, DeleteOutlined } from "@ant-design/icons";
+import { PageHeader, Button, Space, Input, Collapse } from "antd";
+import { MenuOutlined, PoweroffOutlined, SearchOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "antd";
 import RequestInterface from "../interfaces/request-interface";
 import Modal from "antd/lib/modal/Modal";
+
+const { Panel } = Collapse;
 
 const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
@@ -297,7 +299,46 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
         const response: ResponseInterface = await request.json();
         if (response.success) {
-            setProducts(response.params);
+            const productsWithLabel: ProductInterface[] = (response.params as ProductInterface[]).map(
+                product => {
+                    const {idProduct, name, description, category, price, status} = product;
+                    return {
+                        idProduct, name, description,
+                        category, price, status, nameLabel: name
+                    }
+                }
+            )
+
+            setProducts(productsWithLabel);
+        }
+    }
+
+    const editProduct = async (product: ProductInterface) => {
+        const {idProduct, name, description, category, price} = product;
+
+        const request: RequestInterface = {
+            token: localStorage.getItem("token")!,
+            action: "editProduct",
+            idLogin: parseInt(JSON.stringify(localStorage.getItem("idLogin"))),
+            params: { idProduct, name, description, category, price}
+        }
+
+        const req = await fetch(`${config.url}/edit-product`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(request)
+        })
+
+        const response: ResponseInterface = await req.json();
+
+        if (response.success) {
+            setProducts(
+                products.map(
+                    productLoop => product === productLoop ? {...product, nameLabel: product.name} : productLoop
+                )
+            );
         }
     }
 
@@ -415,36 +456,103 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                     <Col span = {4}>Description</Col>
                     <Col span = {4}>Category</Col>
                     <Col span = {4}>Price</Col>
-                    <Col span = {4} style = {{textAlign: "center"}}>Actions</Col>
+                    <Col span = {4}>Action</Col>
                 </Row>
-                {
-                    products.map((product: ProductInterface, index: number) => (
-                        <React.Fragment key = {product.idProduct}>
-                            {product.status === 1 &&
-                            <Row
-                                
-                                align = "middle"
-                                style = {{
-                                    backgroundColor: index % 2 === 0 ? "rgb(240, 240, 240)" : "white"
-                                }}>
-                                <Col span = {4}>
-                                    <img src = {require("../images/caravatar120x90.png")} />
-                                </Col>
-                                <Col span = {4}>{product.name}</Col>
-                                <Col span = {4}>{product.description}</Col>
-                                <Col span = {4}>{product.category}</Col>
-                                <Col span = {4}>{product.price}</Col>
-                                <Col span = {4} style = {{textAlign: "center"}}>
-                                    <Space>
-                                        <Button>Edit</Button>
-                                        <Button danger onClick = {() => setModal({visible: true, product})}>Delete</Button>
-                                    </Space>
-                                </Col>
-                            </Row>
-                            }
-                        </React.Fragment>
-                    ))
-                }
+                <Collapse defaultActiveKey = {["1"]}>
+                    {
+                        products.map((product: ProductInterface, index: number) => (
+                            <Panel header = {(
+                                <>
+                                    {product.status === 1 &&
+                                    <Row
+                                    
+                                    align = "middle"
+                                    style = {{
+                                        backgroundColor: index % 2 === 0 ? "rgb(240, 240, 240)" : "white"
+                                    }}>
+                                        <Col span = {4}>
+                                            <img src = {require("../images/caravatar120x90.png")} />
+                                        </Col>
+                                        <Col span = {4}>{product.nameLabel}</Col>
+                                        <Col span = {4}>{product.description}</Col>
+                                        <Col span = {4}>{product.category}</Col>
+                                        <Col span = {4}>{product.price}</Col>
+                                        <Col span = {4}>
+                                            <Space>
+                                                <Button danger onClick = {() => setModal({visible: true, product})}>Delete</Button>
+                                            </Space>
+                                        </Col>
+                                    </Row>
+                                    }
+                                </>
+                            )} key = {product.idProduct}>
+                                <Row justify = "center" gutter = {16}>
+                                    <Col flex = "300px">
+                                        <Input
+                                            placeholder = "Name"
+                                            value = {product.name}
+                                            onChange = {
+                                                (e) => setProducts(products.map(
+                                                    productLoop => productLoop.idProduct === product.idProduct?
+                                                        {...product, name: e.target.value} : productLoop
+                                                ))
+                                            }
+                                        />
+                                    </Col>
+
+                                    <Col flex = "300px">
+                                        <Input
+                                            placeholder = "Description"
+                                            value = {product.description}
+                                            onChange = {
+                                                (e) => setProducts(products.map(
+                                                    productLoop => productLoop.idProduct === product.idProduct?
+                                                        {...product, description: e.target.value} : productLoop
+                                                ))
+                                            }
+                                        />
+                                    </Col>
+
+                                    <Col flex = "300px">
+                                        <Input
+                                            placeholder = "Category"
+                                            value = {product.category}
+                                            onChange = {
+                                                (e) => setProducts(products.map(
+                                                    productLoop => productLoop.idProduct === product.idProduct?
+                                                        {...product, category: e.target.value} : productLoop
+                                                ))
+                                            }
+                                        />
+                                    </Col>
+
+                                    <Col flex = "300px">
+                                        <Input
+                                            placeholder = "Price"
+                                            value = {product.price}
+                                            onChange = {
+                                                (e) => setProducts(products.map(
+                                                    productLoop => productLoop.idProduct === product.idProduct?
+                                                        {...product, price: e.target.value} : productLoop
+                                                ))
+                                            }
+                                        />
+                                    </Col>
+                                </Row>
+
+                                <Row justify = "center" gutter = {16}>
+                                    <Col>
+                                        <Button
+                                            icon = {<SaveOutlined />}
+                                            type = "primary"
+                                            onClick = {() => editProduct(product)}
+                                        >Save</Button>
+                                    </Col>
+                                </Row>
+                            </Panel>
+                        ))
+                    }
+                </Collapse>
             </div>
             <Modal
                 title = "Alert"

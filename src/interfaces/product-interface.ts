@@ -3,6 +3,7 @@ import Pagination from "./pagination-interface";
 export interface ProductInterface {
     idProduct: number;
     name: string;
+    nameLabel?: string;
     description: string;
     category: string;
     price: string;
