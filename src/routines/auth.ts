@@ -4,7 +4,8 @@ const auth = () => {
         localStorage.getItem("token") !== "",
         localStorage.getItem("token") !== null
     ]
-    return conditionals.includes(true);
+
+    return conditionals.includes(false);
 }
 
 export default auth;

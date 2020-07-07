@@ -10,7 +10,7 @@ import AddProduct from "../views/AddProduct";
 const PrivateRoute = ({ component: Component, ...rest}: any) => (
     <Route
         {...rest}
-        render = {props => auth() ? (
+        render = {props => !auth() ? (
             <Component {...props} />
         ) : (
             <Redirect to = {{pathname: "/login", state: {from: props.location}}} />

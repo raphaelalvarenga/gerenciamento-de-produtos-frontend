@@ -16,7 +16,7 @@ const App: FunctionComponent = () => {
 
     return (
         <BrowserRouter>
-            {auth() && <PageHeader
+            {!auth() && <PageHeader
                 className = "site-page-header"
                 title = {
                     <Button
@@ -24,9 +24,10 @@ const App: FunctionComponent = () => {
                         shape = "circle"
                         icon = {<MenuOutlined />}
                         size = "large"
+                        onClick = {() => setIsDrawerVisible(true)}
                     />}
                 extra = {[
-                    <Link key = "1" to = "/logout">Logout</Link>
+                    <Link key = "1" to = "/logout"><Button danger icon = {<PoweroffOutlined />}>Logout</Button></Link>
                 ]}
             />}
             <Drawer
