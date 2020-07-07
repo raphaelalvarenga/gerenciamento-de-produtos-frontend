@@ -2,7 +2,9 @@ import React, { FunctionComponent } from "react";
 import './assets/styles.css';
 import Routes from "./components/Routes";
 import { BrowserRouter, Link } from "react-router-dom";
-import { Drawer, List } from "antd";
+import { Drawer, List, PageHeader, Button } from "antd";
+import { MenuOutlined, PoweroffOutlined } from "@ant-design/icons";
+import auth from "./routines/auth";
 
 const App: FunctionComponent = () => {
 
@@ -14,6 +16,19 @@ const App: FunctionComponent = () => {
 
     return (
         <BrowserRouter>
+            {auth() && <PageHeader
+                className = "site-page-header"
+                title = {
+                    <Button
+                        type = "text"
+                        shape = "circle"
+                        icon = {<MenuOutlined />}
+                        size = "large"
+                    />}
+                extra = {[
+                    <Link key = "1" to = "/logout">Logout</Link>
+                ]}
+            />}
             <Drawer
                 title = "Hello, 'User'!"
                 placement = "left"

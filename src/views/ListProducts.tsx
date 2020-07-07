@@ -18,6 +18,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 1,
             "name": "Frontier",
+            "nameLabel": "Frontier",
             "description": "2008",
             "category": "Nissan",
             "price": "$288486.27",
@@ -26,6 +27,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 2,
             "name": "Ranger",
+            "nameLabel": "Ranger",
             "description": "1995",
             "category": "Ford",
             "price": "$463152.42",
@@ -34,6 +36,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 3,
             "name": "Grand Prix",
+            "nameLabel": "Grand Prix",
             "description": "1999",
             "category": "Pontiac",
             "price": "$49478.41",
@@ -42,6 +45,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 4,
             "name": "Aerostar",
+            "nameLabel": "Aerostar",
             "description": "1992",
             "category": "Ford",
             "price": "$256064.23",
@@ -50,6 +54,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 5,
             "name": "Eurovan",
+            "nameLabel": "Eurovan",
             "description": "2001",
             "category": "Volkswagen",
             "price": "$136835.56",
@@ -58,6 +63,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 6,
             "name": "Lanos",
+            "nameLabel": "Lanos",
             "description": "1999",
             "category": "Daewoo",
             "price": "$637850.13",
@@ -66,6 +72,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 7,
             "name": "Outback",
+            "nameLabel": "Outback",
             "description": "2009",
             "category": "Subaru",
             "price": "$701557.02",
@@ -74,6 +81,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 8,
             "name": "Aurora",
+            "nameLabel": "Aurora",
             "description": "2001",
             "category": "Oldsmobile",
             "price": "$29620.86",
@@ -82,6 +90,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 9,
             "name": "Continental",
+            "nameLabel": "Continental",
             "description": "2010",
             "category": "Bentley",
             "price": "$695516.77",
@@ -90,6 +99,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 10,
             "name": "Reatta",
+            "nameLabel": "Reatta",
             "description": "1990",
             "category": "Buick",
             "price": "$832108.56",
@@ -98,6 +108,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 11,
             "name": "Tundra",
+            "nameLabel": "Tundra",
             "description": "2009",
             "category": "Mitsubishi",
             "price": "$984629.10",
@@ -106,6 +117,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 12,
             "name": "Suburban 2500",
+            "nameLabel": "Suburban 2500",
             "description": "1996",
             "category": "Chevrolet",
             "price": "$357960.94",
@@ -114,6 +126,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 13,
             "name": "Mazda3",
+            "nameLabel": "Mazda3",
             "description": "2011",
             "category": "Mazda",
             "price": "$124051.30",
@@ -122,6 +135,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 14,
             "name": "Monte Carlo",
+            "nameLabel": "Monte Carlo",
             "description": "2004",
             "category": "Chevrolet",
             "price": "$253250.38",
@@ -130,6 +144,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 15,
             "name": "929",
+            "nameLabel": "929",
             "description": "1995",
             "category": "Mazda",
             "price": "$946244.70",
@@ -138,6 +153,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 16,
             "name": "Avalon",
+            "nameLabel": "Avalon",
             "description": "2007",
             "category": "Toyota",
             "price": "$208023.10",
@@ -146,6 +162,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 17,
             "name": "A4",
+            "nameLabel": "A4",
             "description": "1997",
             "category": "Audi",
             "price": "$553787.96",
@@ -154,6 +171,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 18,
             "name": "Grand Marquis",
+            "nameLabel": "Grand Marquis",
             "description": "1993",
             "category": "Mercury",
             "price": "$354244.52",
@@ -162,6 +180,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 19,
             "name": "1500",
+            "nameLabel": "1500",
             "description": "1998",
             "category": "Chevrolet",
             "price": "$59619.59",
@@ -170,6 +189,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 20,
             "name": "Ram 1500",
+            "nameLabel": "Ram 1500",
             "description": "2009",
             "category": "Dodge",
             "price": "$262897.58",
@@ -178,6 +198,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 21,
             "name": "RDX",
+            "nameLabel": "RDX",
             "description": "2010",
             "category": "Acura",
             "price": "$586308.21",
@@ -186,6 +207,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 22,
             "name": "Outback",
+            "nameLabel": "Outback",
             "description": "2002",
             "category": "Subaru",
             "price": "$207736.33",
@@ -194,6 +216,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 23,
             "name": "900",
+            "nameLabel": "900",
             "description": "1995",
             "category": "Saab",
             "price": "$481460.50",
@@ -202,6 +225,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 24,
             "name": "F150",
+            "nameLabel": "F150",
             "description": "1993",
             "category": "Ford",
             "price": "$772956.39",
@@ -210,6 +234,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 25,
             "name": "FSeries",
+            "nameLabel": "FSeries",
             "description": "1990",
             "category": "Ford",
             "price": "$940121.07",
@@ -218,6 +243,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 26,
             "name": "Pathfinder",
+            "nameLabel": "Pathfinder",
             "description": "1997",
             "category": "Nissan",
             "price": "$920561.21",
@@ -226,6 +252,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 27,
             "name": "626",
+            "nameLabel": "626",
             "description": "2001",
             "category": "Mazda",
             "price": "$232629.12",
@@ -234,6 +261,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 28,
             "name": "Silverado 2500",
+            "nameLabel": "Silverado 2500",
             "description": "2010",
             "category": "Chevrolet",
             "price": "$401676.33",
@@ -242,6 +270,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 29,
             "name": "Mystique",
+            "nameLabel": "Mystique",
             "description": "1998",
             "category": "Mercury",
             "price": "$699181.58",
@@ -250,6 +279,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         {
             "idProduct": 30,
             "name": "Grand Cherokee",
+            "nameLabel": "Grand Cherokee",
             "description": "2011",
             "category": "Jeep",
             "price": "$772844.18",
@@ -369,28 +399,6 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
     
     return (
         <>
-            {auth() && <PageHeader
-                className = "site-page-header"
-                title = {
-                    <Button
-                        type = "text"
-                        shape = "circle"
-                        icon = {<MenuOutlined />}
-                        size = "large"
-                    />}
-                extra = {[
-                    <Button
-                        key = "1"
-                        type = "text"
-                        shape = "circle"
-                        danger
-                        icon = {<PoweroffOutlined />}
-                        size = "large"
-                        onClick = {() => props.history.push("/logout")}
-                    />
-                ]}
-            />}
-
             <Row style = {{maxWidth: "1200px", margin: "40px auto 20px auto"}} justify = "center" gutter = {16}>
                 <Col flex = "300px">
                     <Input
