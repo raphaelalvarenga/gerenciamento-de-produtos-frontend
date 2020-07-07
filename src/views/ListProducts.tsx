@@ -7,6 +7,7 @@ import { PageHeader, Button, Space } from "antd";
 import { MenuOutlined, PoweroffOutlined } from "@ant-design/icons";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "antd";
+import RequestInterface from "../interfaces/request-interface";
 
 const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
@@ -282,7 +283,34 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         });
 
         const response: ResponseInterface = await request.json();
-        setProducts(response.params);
+        if (response.success) {
+            setProducts(response.params);
+        }
+    }
+
+    const deleteProduct = async (product: ProductInterface) => {
+        const request: RequestInterface = {
+            token: localStorage.getItem("token")!,
+            action: "deleteProduct",
+            idLogin: parseInt(JSON.stringify(localStorage.getItem("idLogin"))),
+            params: {
+                idProduct: product.idProduct
+            }
+        }
+
+        const req = await fetch(`${config.url}/delete-product`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(request)
+        });
+
+        const response: ResponseInterface = await req.json();
+
+        if (response.success) {
+            setProducts(products.map(productLoop => product === productLoop ? {...productLoop, status: 0} : productLoop));
+        }
     }
     
     return (
@@ -338,7 +366,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 <Col span = {4} style = {{textAlign: "center"}}>
                                     <Space>
                                         <Button>Edit</Button>
-                                        <Button danger>Delete</Button>
+                                        <Button danger onClick = {() => deleteProduct(product)}>Delete</Button>
                                     </Space>
                                 </Col>
                             </Row>

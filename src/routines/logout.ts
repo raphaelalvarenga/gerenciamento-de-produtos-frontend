@@ -3,7 +3,7 @@ import config from "./config";
 
 const logout = async () => {
     const request: RequestInterface = {
-        token: JSON.stringify(localStorage.getItem("token")),
+        token: localStorage.getItem("token")!,
         action: "logout",
         idLogin: parseInt(JSON.stringify(localStorage.getItem("idLogin"))),
         params: {}
