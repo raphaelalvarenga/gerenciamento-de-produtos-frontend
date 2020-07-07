@@ -3,8 +3,8 @@ import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
 import config from "../routines/config";
 import auth from "../routines/auth";
-import { PageHeader, Button, Space } from "antd";
-import { MenuOutlined, PoweroffOutlined } from "@ant-design/icons";
+import { PageHeader, Button, Space, Input } from "antd";
+import { MenuOutlined, PoweroffOutlined, SearchOutlined, DeleteOutlined } from "@ant-design/icons";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "antd";
 import RequestInterface from "../interfaces/request-interface";
@@ -259,12 +259,19 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         visible: false, product: {
             idProduct: 0, name: "", description: "", category: "", price: "", status: 0
         }});
+
+    const [searchFields, setSearchFields] = React.useState<{name: string, description: string, category: string}>({
+        name: "", description: "", category: ""
+    });
         
     useEffect(() => {
         // getProducts()
     }, []);
 
     const getProducts = async () => {
+
+        setProducts([]);
+        
         const endpoint: string = config.url;
 
         const request = await fetch(endpoint, {
@@ -277,9 +284,9 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                 "action": "listProducts",
                 "idLogin": localStorage.getItem("idLogin"),
                 "params": {
-                    "name": "",
-                    "description": "",
-                    "category": "",
+                    "name": searchFields.name,
+                    "description": searchFields.description,
+                    "category": searchFields.category,
                     "pagination": {
                         "initialNumber": 0,
                         "finalNumber": 30
@@ -343,6 +350,64 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                 ]}
             />}
 
+            <Row style = {{maxWidth: "1200px", margin: "40px auto 20px auto"}} justify = "center" gutter = {16}>
+                <Col flex = "300px">
+                    <Input
+                        placeholder = "Name"
+                        value = {searchFields.name}
+                        onChange = {
+                            (e) => setSearchFields({
+                                ...searchFields,
+                                name: e.target.value
+                            })
+                        }
+                    />
+                </Col>
+
+                <Col flex = "300px">
+                    <Input
+                        placeholder = "Description"
+                        value = {searchFields.description}
+                        onChange = {
+                            (e) => setSearchFields({
+                                ...searchFields,
+                                description: e.target.value
+                            })
+                        }
+                    />
+                </Col>
+
+                <Col flex = "300px">
+                    <Input
+                        placeholder = "Category"
+                        value = {searchFields.category}
+                        onChange = {
+                            (e) => setSearchFields({
+                                ...searchFields,
+                                category: e.target.value
+                            })
+                        }
+                    />
+                </Col>
+            </Row>
+
+            <Row justify = "center" style = {{marginBottom: "40px"}} gutter = {16}>
+                <Col>
+                    <Button type = "primary" icon = {<SearchOutlined />} onClick = {() => getProducts()}>Search</Button>
+                </Col>
+
+                <Col>
+                    <Button
+                        icon = {<DeleteOutlined />}
+                        onClick = {() => {
+                            setSearchFields({name: "", description: "", category: ""});
+                            getProducts();
+                        }}
+                        danger
+                    >Clean</Button>
+                </Col>
+            </Row>
+
             <div style = {{maxWidth: "1200px", margin: "auto"}}>
                 <Row>
                     <Col span = {4}></Col>
@@ -353,14 +418,14 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                     <Col span = {4} style = {{textAlign: "center"}}>Actions</Col>
                 </Row>
                 {
-                    products.map(product => (
+                    products.map((product: ProductInterface, index: number) => (
                         <React.Fragment key = {product.idProduct}>
                             {product.status === 1 &&
                             <Row
                                 
                                 align = "middle"
                                 style = {{
-                                    backgroundColor: product.idProduct % 2 === 0 ? "rgb(240, 240, 240)" : "white"
+                                    backgroundColor: index % 2 === 0 ? "rgb(240, 240, 240)" : "white"
                                 }}>
                                 <Col span = {4}>
                                     <img src = {require("../images/caravatar120x90.png")} />
