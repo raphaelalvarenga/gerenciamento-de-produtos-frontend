@@ -2,9 +2,8 @@ import React, { useEffect, useState, FunctionComponent } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
 import config from "../routines/config";
-import auth from "../routines/auth";
-import { PageHeader, Button, Space, Input, Collapse } from "antd";
-import { MenuOutlined, PoweroffOutlined, SearchOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons";
+import { Button, Space, Input, Collapse } from "antd";
+import { SearchOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "antd";
 import RequestInterface from "../interfaces/request-interface";
@@ -479,7 +478,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                         backgroundColor: index % 2 === 0 ? "rgb(240, 240, 240)" : "white"
                                     }}>
                                         <Col span = {4}>
-                                            <img src = {require("../images/caravatar120x90.png")} />
+                                            <img src = {require("../images/caravatar120x90.png")} alt = "car-profile" />
                                         </Col>
                                         <Col span = {4}>{product.nameLabel}</Col>
                                         <Col span = {4}>{product.description}</Col>
