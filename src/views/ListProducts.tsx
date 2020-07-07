@@ -2,8 +2,12 @@ import React, { useEffect, useState, FunctionComponent } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
 import config from "../routines/config";
+import auth from "../routines/auth";
+import { PageHeader, Button } from "antd";
+import { MenuOutlined, PoweroffOutlined } from "@ant-design/icons";
+import { RouteComponentProps } from "react-router-dom";
 
-const ListProducts: FunctionComponent = () => {
+const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
     const [products, setProducts] = useState<ProductInterface[]>([]);
 
@@ -20,9 +24,9 @@ const ListProducts: FunctionComponent = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiMjY3ZmU5NGNmNWU0YTk0YmRmZGE3ZmNhZDUzZGNiNTMiLCJpYXQiOjE1OTM5OTM3NzksImV4cCI6MTU5Mzk5NzM3OX0.QFBK3W4vQXyjB3V70ZfXk8Dfd7FQj0bjc2WKJjFvpNw",
+                "token": localStorage.getItem("token"),
                 "action": "listProducts",
-                "idLogin": 1,
+                "idLogin": localStorage.getItem("idLogin"),
                 "params": {
                     "name": "",
                     "description": "",
@@ -39,7 +43,32 @@ const ListProducts: FunctionComponent = () => {
         setProducts(response.params);
     }
     
-    return <h1>Products List Screen</h1>
+    return (
+        <>
+            {auth() && <PageHeader
+                className = "site-page-header"
+                title = {
+                    <Button
+                        type = "text"
+                        shape = "circle"
+                        icon = {<MenuOutlined />}
+                        size = "large"
+                    />}
+                extra = {[
+                    <Button
+                        key = "1"
+                        type = "text"
+                        shape = "circle"
+                        danger
+                        icon = {<PoweroffOutlined />}
+                        size = "large"
+                        onClick = {() => props.history.push("/logout")}
+                    />
+                ]}
+            />}
+            <h1>Products List Screen</h1>
+        </>
+    )
 }
 
 export default ListProducts;

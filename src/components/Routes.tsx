@@ -4,6 +4,7 @@ import ListProducts from "../views/ListProducts";
 import Login from "../views/Login";
 import AddUser from "../views/AddUser";
 import auth from "../routines/auth";
+import Logout from "../views/Logout";
 
 const PrivateRoute = ({ component: Component, ...rest}: any) => (
     <Route
@@ -22,6 +23,7 @@ const Routes: FunctionComponent = () => {
             <Route path = "/login" component = {Login} />
             <PrivateRoute exact path = "/" component = {ListProducts} />
             <PrivateRoute path = "/add-user" component = {AddUser} />
+            <Route path = "/logout" component = {Logout} />
         </Switch>
     )
 }

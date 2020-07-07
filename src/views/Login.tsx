@@ -21,7 +21,7 @@ const Login: FunctionComponent<RouteComponentProps> = (props) => {
             idLogin: 0,
             params: { email, password: cryptPass }
         }
-        console.log(`${config.url}/login`)
+
         const req = await fetch(`${config.url}/login`, {
             method: "POST",
             headers: {

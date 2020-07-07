@@ -15,7 +15,12 @@ const logout = async () => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(request)
-    })
+    });
+
+    await req.json();
+
+    localStorage.setItem("token", "");
+    localStorage.setItem("idLogin", "0");
 }
 
 export default logout;
