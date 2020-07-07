@@ -5,6 +5,7 @@ import RequestInterface from "../interfaces/request-interface";
 import md5 from "md5";
 import ResponseInterface from "../interfaces/response-interface";
 import { RouteComponentProps } from "react-router-dom";
+import config from "../routines/config";
 
 const Login: FunctionComponent<RouteComponentProps> = (props) => {
 
@@ -20,8 +21,8 @@ const Login: FunctionComponent<RouteComponentProps> = (props) => {
             idLogin: 0,
             params: { email, password: cryptPass }
         }
-
-        const req = await fetch("https://gerenciamento-de-produtos-back.herokuapp.com/login", {
+        console.log(`${config.url}/login`)
+        const req = await fetch(`${config.url}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

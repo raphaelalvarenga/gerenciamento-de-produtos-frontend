@@ -5,6 +5,7 @@ import { BrowserRouter, Link } from "react-router-dom";
 import { Drawer, List, PageHeader, Button } from "antd";
 import { MenuOutlined, PoweroffOutlined } from "@ant-design/icons";
 import auth from "./routines/auth";
+import logout from "./routines/logout";
 
 const App: FunctionComponent = () => {
 
@@ -13,6 +14,10 @@ const App: FunctionComponent = () => {
         {id: 1, name: "Home", route: "/"},
         {id: 2, name: "Add User", route: "/add-user"}
     ]
+
+    const makeLogout = async () => {
+        await logout();
+    }
 
     return (
         <BrowserRouter>
@@ -35,6 +40,7 @@ const App: FunctionComponent = () => {
                         danger
                         icon = {<PoweroffOutlined />}
                         size = "large"
+                        onClick = {() => makeLogout()}
                     />
                 ]}
             />}

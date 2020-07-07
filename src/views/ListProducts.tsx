@@ -1,6 +1,7 @@
 import React, { useEffect, useState, FunctionComponent } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
+import config from "../routines/config";
 
 const ListProducts: FunctionComponent = () => {
 
@@ -11,7 +12,7 @@ const ListProducts: FunctionComponent = () => {
     }, []);
 
     const getProducts = async () => {
-        const endpoint: string = "https://gerenciamento-de-produtos-back.herokuapp.com/"
+        const endpoint: string = config.url;
 
         const request = await fetch(endpoint, {
             method: "POST",
