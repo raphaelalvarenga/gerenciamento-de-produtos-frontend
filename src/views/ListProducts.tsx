@@ -8,7 +8,6 @@ import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "antd";
 import RequestInterface from "../interfaces/request-interface";
 import Modal from "antd/lib/modal/Modal";
-import PaginationInterface from "../interfaces/pagination-interface";
 
 const { Panel } = Collapse;
 
@@ -69,9 +68,17 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                     }
                 }
             )
-            console.log(response.params.totalProducts);
+
             setTotalProducts(response.params.totalProducts);
             setProducts(productsWithLabel);
+
+            return false;
+        }
+        
+        if (response.message === "Invalid-token") {
+                localStorage.setItem("token", "");
+                props.history.push("/login");
+                return false;
         }
     }
 
@@ -127,11 +134,6 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         if (response.success) {
             setProducts(products.map(productLoop => product === productLoop ? {...productLoop, status: 0} : productLoop));
         }
-    }
-
-    const paginate = (page: number, pageSize: number | undefined) => {
-        // To set the pagination, here is the calc: (page - 1) * 10
-        getProducts((page - 1) * 10);
     }
     
     return (

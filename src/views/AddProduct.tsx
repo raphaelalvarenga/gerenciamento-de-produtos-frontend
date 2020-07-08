@@ -2,8 +2,7 @@ import React, { useState, FunctionComponent } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
 import config from "../routines/config";
-import auth from "../routines/auth";
-import { Button, Space, Input, Alert } from "antd";
+import { Button, Input, Alert } from "antd";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "antd";
 import RequestInterface from "../interfaces/request-interface";
@@ -52,9 +51,16 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
         if (response.success) {
             setAlert({message: "Product has been saved successfully!", visible: true, type: "success"});
             setNewProduct({...newProduct, name: "", description: "", category: "", price: ""})
-        } else {
-            setAlert({message: "Something went wrong... contact the IT team.", visible: true, type: "error"});
+            return false;
         }
+
+        if (response.message === "Invalid-token") {
+            localStorage.setItem("token", "");
+            props.history.push("/login");
+            return false;
+        }
+        
+        setAlert({message: "Something went wrong... contact the IT team.", visible: true, type: "error"});
     }
     
     return (

@@ -6,8 +6,9 @@ import RequestInterface from "../interfaces/request-interface";
 import config from "../routines/config";
 import ResponseInterface from "../interfaces/response-interface";
 import md5 from "md5";
+import { RouteComponentProps } from "react-router-dom";
 
-const AddUser: FunctionComponent = () => {
+const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
 
     const [newUser, setNewUser] = React.useState<UserInterface>({
         idLogin: 0, name: "", email: "", password: ""
@@ -15,10 +16,6 @@ const AddUser: FunctionComponent = () => {
 
     const [confirmPassword, setConfirmPassword] = React.useState<string>("");
     const [alert, setAlert] = React.useState<{show: boolean, message: string, type: string}>({show: false, message: "", type: ""})
-
-    
-
-
 
     const addNewUser = async () => {
         const conditionals: boolean[] = [
@@ -56,10 +53,18 @@ const AddUser: FunctionComponent = () => {
 
         const response: ResponseInterface = await req.json();
 
-        response.success ?
+        if (response.success) {
             setAlert({show: true, type: "success", message: "User created successfully!"})
-            :
-            setAlert({show: true, type: "error", message: response.message})
+            return false;
+        }
+
+        if (response.message === "Invalid-token") {
+            localStorage.setItem("token", "");
+            props.history.push("/login");
+            return false;
+        }
+
+        setAlert({show: true, type: "error", message: response.message})
     }
     
     return (
