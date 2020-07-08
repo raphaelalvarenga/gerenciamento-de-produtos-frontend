@@ -2,289 +2,19 @@ import React, { useEffect, useState, FunctionComponent } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
 import config from "../routines/config";
-import { Button, Space, Input, Collapse } from "antd";
+import { Button, Space, Input, Collapse, Pagination } from "antd";
 import { SearchOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons";
 import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "antd";
 import RequestInterface from "../interfaces/request-interface";
 import Modal from "antd/lib/modal/Modal";
+import PaginationInterface from "../interfaces/pagination-interface";
 
 const { Panel } = Collapse;
 
 const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
-    const [products, setProducts] = useState<ProductInterface[]>([
-        {
-            "idProduct": 1,
-            "name": "Frontier",
-            "nameLabel": "Frontier",
-            "description": "2008",
-            "category": "Nissan",
-            "price": "$288486.27",
-            "status": 1
-        },
-        {
-            "idProduct": 2,
-            "name": "Ranger",
-            "nameLabel": "Ranger",
-            "description": "1995",
-            "category": "Ford",
-            "price": "$463152.42",
-            "status": 1
-        },
-        {
-            "idProduct": 3,
-            "name": "Grand Prix",
-            "nameLabel": "Grand Prix",
-            "description": "1999",
-            "category": "Pontiac",
-            "price": "$49478.41",
-            "status": 1
-        },
-        {
-            "idProduct": 4,
-            "name": "Aerostar",
-            "nameLabel": "Aerostar",
-            "description": "1992",
-            "category": "Ford",
-            "price": "$256064.23",
-            "status": 1
-        },
-        {
-            "idProduct": 5,
-            "name": "Eurovan",
-            "nameLabel": "Eurovan",
-            "description": "2001",
-            "category": "Volkswagen",
-            "price": "$136835.56",
-            "status": 1
-        },
-        {
-            "idProduct": 6,
-            "name": "Lanos",
-            "nameLabel": "Lanos",
-            "description": "1999",
-            "category": "Daewoo",
-            "price": "$637850.13",
-            "status": 1
-        },
-        {
-            "idProduct": 7,
-            "name": "Outback",
-            "nameLabel": "Outback",
-            "description": "2009",
-            "category": "Subaru",
-            "price": "$701557.02",
-            "status": 1
-        },
-        {
-            "idProduct": 8,
-            "name": "Aurora",
-            "nameLabel": "Aurora",
-            "description": "2001",
-            "category": "Oldsmobile",
-            "price": "$29620.86",
-            "status": 1
-        },
-        {
-            "idProduct": 9,
-            "name": "Continental",
-            "nameLabel": "Continental",
-            "description": "2010",
-            "category": "Bentley",
-            "price": "$695516.77",
-            "status": 1
-        },
-        {
-            "idProduct": 10,
-            "name": "Reatta",
-            "nameLabel": "Reatta",
-            "description": "1990",
-            "category": "Buick",
-            "price": "$832108.56",
-            "status": 1
-        },
-        {
-            "idProduct": 11,
-            "name": "Tundra",
-            "nameLabel": "Tundra",
-            "description": "2009",
-            "category": "Mitsubishi",
-            "price": "$984629.10",
-            "status": 1
-        },
-        {
-            "idProduct": 12,
-            "name": "Suburban 2500",
-            "nameLabel": "Suburban 2500",
-            "description": "1996",
-            "category": "Chevrolet",
-            "price": "$357960.94",
-            "status": 1
-        },
-        {
-            "idProduct": 13,
-            "name": "Mazda3",
-            "nameLabel": "Mazda3",
-            "description": "2011",
-            "category": "Mazda",
-            "price": "$124051.30",
-            "status": 1
-        },
-        {
-            "idProduct": 14,
-            "name": "Monte Carlo",
-            "nameLabel": "Monte Carlo",
-            "description": "2004",
-            "category": "Chevrolet",
-            "price": "$253250.38",
-            "status": 1
-        },
-        {
-            "idProduct": 15,
-            "name": "929",
-            "nameLabel": "929",
-            "description": "1995",
-            "category": "Mazda",
-            "price": "$946244.70",
-            "status": 1
-        },
-        {
-            "idProduct": 16,
-            "name": "Avalon",
-            "nameLabel": "Avalon",
-            "description": "2007",
-            "category": "Toyota",
-            "price": "$208023.10",
-            "status": 1
-        },
-        {
-            "idProduct": 17,
-            "name": "A4",
-            "nameLabel": "A4",
-            "description": "1997",
-            "category": "Audi",
-            "price": "$553787.96",
-            "status": 1
-        },
-        {
-            "idProduct": 18,
-            "name": "Grand Marquis",
-            "nameLabel": "Grand Marquis",
-            "description": "1993",
-            "category": "Mercury",
-            "price": "$354244.52",
-            "status": 1
-        },
-        {
-            "idProduct": 19,
-            "name": "1500",
-            "nameLabel": "1500",
-            "description": "1998",
-            "category": "Chevrolet",
-            "price": "$59619.59",
-            "status": 1
-        },
-        {
-            "idProduct": 20,
-            "name": "Ram 1500",
-            "nameLabel": "Ram 1500",
-            "description": "2009",
-            "category": "Dodge",
-            "price": "$262897.58",
-            "status": 1
-        },
-        {
-            "idProduct": 21,
-            "name": "RDX",
-            "nameLabel": "RDX",
-            "description": "2010",
-            "category": "Acura",
-            "price": "$586308.21",
-            "status": 1
-        },
-        {
-            "idProduct": 22,
-            "name": "Outback",
-            "nameLabel": "Outback",
-            "description": "2002",
-            "category": "Subaru",
-            "price": "$207736.33",
-            "status": 1
-        },
-        {
-            "idProduct": 23,
-            "name": "900",
-            "nameLabel": "900",
-            "description": "1995",
-            "category": "Saab",
-            "price": "$481460.50",
-            "status": 1
-        },
-        {
-            "idProduct": 24,
-            "name": "F150",
-            "nameLabel": "F150",
-            "description": "1993",
-            "category": "Ford",
-            "price": "$772956.39",
-            "status": 1
-        },
-        {
-            "idProduct": 25,
-            "name": "FSeries",
-            "nameLabel": "FSeries",
-            "description": "1990",
-            "category": "Ford",
-            "price": "$940121.07",
-            "status": 1
-        },
-        {
-            "idProduct": 26,
-            "name": "Pathfinder",
-            "nameLabel": "Pathfinder",
-            "description": "1997",
-            "category": "Nissan",
-            "price": "$920561.21",
-            "status": 1
-        },
-        {
-            "idProduct": 27,
-            "name": "626",
-            "nameLabel": "626",
-            "description": "2001",
-            "category": "Mazda",
-            "price": "$232629.12",
-            "status": 1
-        },
-        {
-            "idProduct": 28,
-            "name": "Silverado 2500",
-            "nameLabel": "Silverado 2500",
-            "description": "2010",
-            "category": "Chevrolet",
-            "price": "$401676.33",
-            "status": 1
-        },
-        {
-            "idProduct": 29,
-            "name": "Mystique",
-            "nameLabel": "Mystique",
-            "description": "1998",
-            "category": "Mercury",
-            "price": "$699181.58",
-            "status": 1
-        },
-        {
-            "idProduct": 30,
-            "name": "Grand Cherokee",
-            "nameLabel": "Grand Cherokee",
-            "description": "2011",
-            "category": "Jeep",
-            "price": "$772844.18",
-            "status": 1
-        }
-    ]);
+    const [products, setProducts] = useState<ProductInterface[]>([]);
     
     const [modal, setModal] = React.useState<{visible: boolean, product: ProductInterface}>({
         visible: false, product: {
@@ -294,12 +24,14 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
     const [searchFields, setSearchFields] = React.useState<{name: string, description: string, category: string}>({
         name: "", description: "", category: ""
     });
-        
+
+    const [totalProducts, setTotalProducts] = React.useState<number>(1);
+    
     useEffect(() => {
-        // getProducts()
+        getProducts(0)
     }, []);
 
-    const getProducts = async () => {
+    const getProducts = async (page: number) => {
 
         setProducts([]);
         
@@ -319,8 +51,8 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                     "description": searchFields.description,
                     "category": searchFields.category,
                     "pagination": {
-                        "initialNumber": 0,
-                        "finalNumber": 30
+                        "initialNumber": page,
+                        "finalNumber": 10
                     }
                 }
             })
@@ -328,7 +60,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
         const response: ResponseInterface = await request.json();
         if (response.success) {
-            const productsWithLabel: ProductInterface[] = (response.params as ProductInterface[]).map(
+            const productsWithLabel: ProductInterface[] = (response.params.products as ProductInterface[]).map(
                 product => {
                     const {idProduct, name, description, category, price, status} = product;
                     return {
@@ -337,7 +69,8 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                     }
                 }
             )
-
+            console.log(response.params.totalProducts);
+            setTotalProducts(response.params.totalProducts);
             setProducts(productsWithLabel);
         }
     }
@@ -395,6 +128,11 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
             setProducts(products.map(productLoop => product === productLoop ? {...productLoop, status: 0} : productLoop));
         }
     }
+
+    const paginate = (page: number, pageSize: number | undefined) => {
+        // To set the pagination, here is the calc: (page - 1) * 10
+        getProducts((page - 1) * 10);
+    }
     
     return (
         <>
@@ -441,7 +179,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
             <Row justify = "center" style = {{marginBottom: "40px"}} gutter = {16}>
                 <Col>
-                    <Button type = "primary" icon = {<SearchOutlined />} onClick = {() => getProducts()}>Search</Button>
+                    <Button type = "primary" icon = {<SearchOutlined />} onClick = {() => getProducts(0)}>Search</Button>
                 </Col>
 
                 <Col>
@@ -449,7 +187,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                         icon = {<DeleteOutlined />}
                         onClick = {() => {
                             setSearchFields({name: "", description: "", category: ""});
-                            getProducts();
+                            getProducts(0);
                         }}
                         danger
                     >Clean</Button>
@@ -457,6 +195,17 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
             </Row>
 
             <div style = {{maxWidth: "1200px", margin: "auto"}}>
+                <Row justify = "center">
+                    <Col>
+                        <Pagination
+                            defaultCurrent = {1}
+                            total = {totalProducts}
+                            onChange = {(page) => getProducts(page)}
+                            showSizeChanger = {false}
+                        />
+                    </Col>
+                </Row>
+
                 <Row>
                     <Col span = {4}></Col>
                     <Col span = {4}>Name</Col>

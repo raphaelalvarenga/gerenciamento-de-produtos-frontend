@@ -1,4 +1,4 @@
-export default interface Pagination {
+export default interface PaginationInterface {
     initialNumber: number;
     finalNumber: number;
 }
