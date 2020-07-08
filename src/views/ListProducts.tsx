@@ -2,12 +2,12 @@ import React, { useEffect, useState, FunctionComponent } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
 import config from "../routines/config";
-import { Button, Space, Input, Collapse, Pagination } from "antd";
+import { Button, Space, Input, Collapse, Pagination, Spin, Row, Col } from "antd";
 import { SearchOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons";
 import { RouteComponentProps } from "react-router-dom";
-import { Row, Col } from "antd";
 import RequestInterface from "../interfaces/request-interface";
 import Modal from "antd/lib/modal/Modal";
+import Toolbar from "../components/Toolbar";
 
 const { Panel } = Collapse;
 
@@ -138,6 +138,12 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
     
     return (
         <>
+            <Toolbar
+                makeLogout = {() => props.history.push("/logout")}
+                listProducts = {() => props.history.push("/")}
+                addProduct = {() => props.history.push("/add-product")}
+                addUser = {() => props.history.push("/add-user")}
+            />
             <Row style = {{maxWidth: "1200px", margin: "40px auto 20px auto"}} justify = "center" gutter = {16}>
                 <Col flex = "300px">
                     <Input
@@ -197,121 +203,135 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
             </Row>
 
             <div style = {{maxWidth: "1200px", margin: "auto"}}>
-                <Row justify = "center">
-                    <Col>
-                        <Pagination
-                            defaultCurrent = {1}
-                            total = {totalProducts}
-                            onChange = {(page) => getProducts(page)}
-                            showSizeChanger = {false}
-                        />
-                    </Col>
-                </Row>
+            {
+                products.length > 0 ? (
+                    <>
+                    <Row justify = "center">
+                        <Col>
+                            <Pagination
+                                defaultCurrent = {1}
+                                total = {totalProducts}
+                                onChange = {(page) => getProducts(page)}
+                                showSizeChanger = {false}
+                            />
+                        </Col>
+                    </Row>
 
-                <Row>
-                    <Col span = {4}></Col>
-                    <Col span = {4}>Name</Col>
-                    <Col span = {4}>Description</Col>
-                    <Col span = {4}>Category</Col>
-                    <Col span = {4}>Price</Col>
-                    <Col span = {4}>Action</Col>
-                </Row>
-                <Collapse>
-                    {
-                        products.map((product: ProductInterface, index: number) => (
-                            <Panel header = {(
-                                <>
-                                    {product.status === 1 &&
-                                    <Row
-                                    
-                                    align = "middle"
-                                    style = {{
-                                        backgroundColor: index % 2 === 0 ? "rgb(240, 240, 240)" : "white"
-                                    }}>
-                                        <Col span = {4}>
-                                            <img src = {require("../images/caravatar120x90.png")} alt = "car-profile" />
-                                        </Col>
-                                        <Col span = {4}>{product.nameLabel}</Col>
-                                        <Col span = {4}>{product.description}</Col>
-                                        <Col span = {4}>{product.category}</Col>
-                                        <Col span = {4}>{product.price}</Col>
-                                        <Col span = {4}>
-                                            <Space>
-                                                <Button danger onClick = {() => setModal({visible: true, product})}>Delete</Button>
-                                            </Space>
-                                        </Col>
-                                    </Row>
-                                    }
-                                </>
-                            )} key = {product.idProduct}>
-                                <Row justify = "center" gutter = {16}>
-                                    <Col flex = "300px">
-                                        <Input
-                                            placeholder = "Name"
-                                            value = {product.name}
-                                            onChange = {
-                                                (e) => setProducts(products.map(
-                                                    productLoop => productLoop.idProduct === product.idProduct?
-                                                        {...product, name: e.target.value} : productLoop
-                                                ))
+                    <Row>
+                        <Col span = {4}></Col>
+                        <Col span = {4}>Name</Col>
+                        <Col span = {4}>Description</Col>
+                        <Col span = {4}>Category</Col>
+                        <Col span = {4}>Price</Col>
+                        <Col span = {4}>Action</Col>
+                    </Row>
+                    <Collapse>
+                        {
+                            products.map((product: ProductInterface, index: number) => (
+                                <Panel header = {(
+                                    <>
+                                        {product.status === 1 &&
+                                            <Row
+                                            
+                                            align = "middle"
+                                            style = {{
+                                                backgroundColor: index % 2 === 0 ? "rgb(240, 240, 240)" : "white"
+                                            }}>
+                                                <Col span = {4}>
+                                                    <img src = {require("../images/caravatar120x90.png")} alt = "car-profile" />
+                                                </Col>
+                                                <Col span = {4}>{product.nameLabel}</Col>
+                                                <Col span = {4}>{product.description}</Col>
+                                                <Col span = {4}>{product.category}</Col>
+                                                <Col span = {4}>{product.price}</Col>
+                                                <Col span = {4}>
+                                                    <Space>
+                                                        <Button danger onClick = {() => setModal({visible: true, product})}>Delete</Button>
+                                                    </Space>
+                                                </Col>
+                                            </Row>
                                             }
-                                        />
-                                    </Col>
+                                        </>
+                                    )} key = {product.idProduct}>
+                                        <Row justify = "center" gutter = {16}>
+                                            <Col flex = "300px">
+                                                <Input
+                                                    placeholder = "Name"
+                                                    value = {product.name}
+                                                    onChange = {
+                                                        (e) => setProducts(products.map(
+                                                            productLoop => productLoop.idProduct === product.idProduct?
+                                                                {...product, name: e.target.value} : productLoop
+                                                        ))
+                                                    }
+                                                />
+                                            </Col>
 
-                                    <Col flex = "300px">
-                                        <Input
-                                            placeholder = "Description"
-                                            value = {product.description}
-                                            onChange = {
-                                                (e) => setProducts(products.map(
-                                                    productLoop => productLoop.idProduct === product.idProduct?
-                                                        {...product, description: e.target.value} : productLoop
-                                                ))
-                                            }
-                                        />
-                                    </Col>
+                                            <Col flex = "300px">
+                                                <Input
+                                                    placeholder = "Description"
+                                                    value = {product.description}
+                                                    onChange = {
+                                                        (e) => setProducts(products.map(
+                                                            productLoop => productLoop.idProduct === product.idProduct?
+                                                                {...product, description: e.target.value} : productLoop
+                                                        ))
+                                                    }
+                                                />
+                                            </Col>
 
-                                    <Col flex = "300px">
-                                        <Input
-                                            placeholder = "Category"
-                                            value = {product.category}
-                                            onChange = {
-                                                (e) => setProducts(products.map(
-                                                    productLoop => productLoop.idProduct === product.idProduct?
-                                                        {...product, category: e.target.value} : productLoop
-                                                ))
-                                            }
-                                        />
-                                    </Col>
+                                            <Col flex = "300px">
+                                                <Input
+                                                    placeholder = "Category"
+                                                    value = {product.category}
+                                                    onChange = {
+                                                        (e) => setProducts(products.map(
+                                                            productLoop => productLoop.idProduct === product.idProduct?
+                                                                {...product, category: e.target.value} : productLoop
+                                                        ))
+                                                    }
+                                                />
+                                            </Col>
 
-                                    <Col flex = "300px">
-                                        <Input
-                                            placeholder = "Price"
-                                            value = {product.price}
-                                            onChange = {
-                                                (e) => setProducts(products.map(
-                                                    productLoop => productLoop.idProduct === product.idProduct?
-                                                        {...product, price: e.target.value} : productLoop
-                                                ))
-                                            }
-                                        />
-                                    </Col>
-                                </Row>
+                                            <Col flex = "300px">
+                                                <Input
+                                                    placeholder = "Price"
+                                                    value = {product.price}
+                                                    onChange = {
+                                                        (e) => setProducts(products.map(
+                                                            productLoop => productLoop.idProduct === product.idProduct?
+                                                                {...product, price: e.target.value} : productLoop
+                                                        ))
+                                                    }
+                                                />
+                                            </Col>
+                                        </Row>
 
-                                <Row justify = "center" gutter = {16}>
-                                    <Col>
-                                        <Button
-                                            icon = {<SaveOutlined />}
-                                            type = "primary"
-                                            onClick = {() => editProduct(product)}
-                                        >Save</Button>
-                                    </Col>
-                                </Row>
-                            </Panel>
-                        ))
-                    }
-                </Collapse>
+                                        <Row justify = "center" gutter = {16}>
+                                            <Col>
+                                                <Button
+                                                    icon = {<SaveOutlined />}
+                                                    type = "primary"
+                                                    onClick = {() => editProduct(product)}
+                                                >Save</Button>
+                                            </Col>
+                                        </Row>
+                                    </Panel>
+                                ))
+                            }
+                        </Collapse>
+                    </>
+                ) : (
+                    <Row justify = "center">
+                        <Col>
+                            <Spin size = "large" />
+                        </Col>
+                    </Row>
+                )
+            }
             </div>
+
+            
             <Modal
                 title = "Alert"
                 visible = {modal.visible}

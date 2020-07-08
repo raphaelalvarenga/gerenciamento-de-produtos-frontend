@@ -7,6 +7,8 @@ import { RouteComponentProps } from "react-router-dom";
 import { Row, Col } from "antd";
 import RequestInterface from "../interfaces/request-interface";
 import { SaveOutlined, DeleteOutlined } from "@ant-design/icons";
+import Toolbar from "../components/Toolbar";
+import Sidenav from "../components/Sidenav";
 
 const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
 
@@ -65,6 +67,13 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
     
     return (
         <>
+            <Toolbar
+                makeLogout = {() => props.history.push("/logout")}
+                listProducts = {() => props.history.push("/")}
+                addProduct = {() => props.history.push("/add-product")}
+                addUser = {() => props.history.push("/add-user")}
+            />
+            <Sidenav />
             <Row style = {{maxWidth: "1200px", margin: "40px auto 20px auto"}} justify = "center" gutter = {16}>
                 <Col flex = "300px">
                     <Input

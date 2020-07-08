@@ -7,6 +7,8 @@ import config from "../routines/config";
 import ResponseInterface from "../interfaces/response-interface";
 import md5 from "md5";
 import { RouteComponentProps } from "react-router-dom";
+import Toolbar from "../components/Toolbar";
+import logout from "../routines/logout";
 
 const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
 
@@ -68,135 +70,144 @@ const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
     }
     
     return (
-        <form>
-            <Row style = {{maxWidth: "1200px", marginBottom: "20px", marginTop: "20px"}} justify = "center">
-                <Col xs = {12}>
-                    <Input
-                        required
-                        placeholder = "Name"
-                        prefix = {<UserOutlined />}
-                        value = {newUser.name}
-                        onChange = {(e) => setNewUser({...newUser, name: e.target.value})}
-                        onPressEnter = {addNewUser}
-                    />
-                </Col>
-            </Row>
-
-            <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                <Col xs = {12}>
-                    <Input
-                        required
-                        type = "email"
-                        placeholder = "E-mail"
-                        prefix = {<MailOutlined />}
-                        value = {newUser.email}
-                        onChange = {(e) => setNewUser({...newUser, email: e.target.value})}
-                        onPressEnter = {addNewUser}
-                    />
-                </Col>
-            </Row>
-
-            <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                <Col xs = {12}>
-                    <Input.Password
-                        required
-                        placeholder = "Password"
-                        prefix = {<LockOutlined />}
-                        iconRender = {visiblePass => visiblePass ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
-                        value = {newUser.password}
-                        onChange = {(e) => setNewUser({...newUser, password: e.target.value})}
-                        onPressEnter = {addNewUser}
-                    />
-                </Col>
-            </Row>
-
-            <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                <Col xs = {12}>
-                    <Input.Password
-                        required
-                        placeholder = "Confirm password"
-                        prefix = {<LockOutlined />}
-                        iconRender = {visiblePass => visiblePass ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
-                        value = {confirmPassword}
-                        onChange = {(e) => setConfirmPassword(e.target.value)}
-                        onPressEnter = {addNewUser}
-                    />
-                </Col>
-            </Row>
-
-            {
-                (newUser.name !== "" || newUser.email !== "" || newUser.password !== "" || confirmPassword !== "") &&
-                <>
-                <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                    <Col xs = {12} style = {{color: newUser.name !== "" ? "green" : "red"}}>
-                        {
-                            newUser.name === "" ? <CloseOutlined /> : <CheckOutlined />
-                        }
-                        Name must be filled
+        <>
+            <Toolbar
+                makeLogout = {() => props.history.push("/logout")}
+                listProducts = {() => props.history.push("/")}
+                addProduct = {() => props.history.push("/add-product")}
+                addUser = {() => props.history.push("/add-user")}
+            />
+            
+            <form>
+                <Row style = {{maxWidth: "1200px", marginBottom: "20px", marginTop: "20px"}} justify = "center">
+                    <Col xs = {12}>
+                        <Input
+                            required
+                            placeholder = "Name"
+                            prefix = {<UserOutlined />}
+                            value = {newUser.name}
+                            onChange = {(e) => setNewUser({...newUser, name: e.target.value})}
+                            onPressEnter = {addNewUser}
+                        />
                     </Col>
                 </Row>
 
-                <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                    <Col xs = {12} style = {{color: (/@./.test(newUser.email)) ? "green" : "red"}}>
-                        {
-                            !(/@./.test(newUser.email)) ? <CloseOutlined /> : <CheckOutlined />
-                        }
-                        E-mail must be valid
-                    </Col>
-                </Row>
-
-                <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                    <Col xs = {12} style = {{color: (/[a-z]/.test(newUser.password)) ? "green" : "red"}}>
-                        {
-                            (/[a-z]/.test(newUser.password)) ? <CheckOutlined /> : <CloseOutlined />
-                        }
-                        Password contains letters
-                    </Col>
-                </Row>
-
-                <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                    <Col xs = {12} style = {{color: (/[0-9]/.test(newUser.password)) ? "green" : "red"}}>
-                        {
-                            (/[0-9]/.test(newUser.password)) ? <CheckOutlined /> : <CloseOutlined />
-                        }
-                        Password contains numbers
-                    </Col>
-                </Row>
-
-                <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                    <Col xs = {12} style = {{color: (/[^0-9a-z]/i.test(newUser.password)) ? "green" : "red"}}>
-                        {
-                            (/[^0-9a-z]/i.test(newUser.password)) ? <CheckOutlined /> : <CloseOutlined />
-                        }
-                        Password contains special characters
-                    </Col>
-                </Row>
-
-                <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                    <Col xs = {12} style = {{color: confirmPassword === newUser.password && newUser.password !== "" ? "green" : "red"}}>
-                        {
-                            confirmPassword === newUser.password && newUser.password !== "" ? <CheckOutlined /> : <CloseOutlined />
-                        }
-                        Confirm password matches password
-                    </Col>
-                </Row>
-
-            </>}
                 <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
                     <Col xs = {12}>
-                        <Button
-                            type = "primary"
-                            icon = {<SaveOutlined />}
-                            onClick = {addNewUser}
-                        >Save</Button>
+                        <Input
+                            required
+                            type = "email"
+                            placeholder = "E-mail"
+                            prefix = {<MailOutlined />}
+                            value = {newUser.email}
+                            onChange = {(e) => setNewUser({...newUser, email: e.target.value})}
+                            onPressEnter = {addNewUser}
+                        />
                     </Col>
                 </Row>
 
                 <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
-                    {alert.show && alert.type === "error" && <Alert type = "error" message = {alert.message} />}
-                    {alert.show && alert.type === "success" && <Alert type = "success" message = {alert.message} />}
+                    <Col xs = {12}>
+                        <Input.Password
+                            required
+                            placeholder = "Password"
+                            prefix = {<LockOutlined />}
+                            iconRender = {visiblePass => visiblePass ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
+                            value = {newUser.password}
+                            onChange = {(e) => setNewUser({...newUser, password: e.target.value})}
+                            onPressEnter = {addNewUser}
+                        />
+                    </Col>
                 </Row>
-        </form>
+
+                <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
+                    <Col xs = {12}>
+                        <Input.Password
+                            required
+                            placeholder = "Confirm password"
+                            prefix = {<LockOutlined />}
+                            iconRender = {visiblePass => visiblePass ? <EyeTwoTone /> : <EyeInvisibleOutlined />}
+                            value = {confirmPassword}
+                            onChange = {(e) => setConfirmPassword(e.target.value)}
+                            onPressEnter = {addNewUser}
+                        />
+                    </Col>
+                </Row>
+
+                {
+                    (newUser.name !== "" || newUser.email !== "" || newUser.password !== "" || confirmPassword !== "") &&
+                    <>
+                    <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
+                        <Col xs = {12} style = {{color: newUser.name !== "" ? "green" : "red"}}>
+                            {
+                                newUser.name === "" ? <CloseOutlined /> : <CheckOutlined />
+                            }
+                            Name must be filled
+                        </Col>
+                    </Row>
+
+                    <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
+                        <Col xs = {12} style = {{color: (/@./.test(newUser.email)) ? "green" : "red"}}>
+                            {
+                                !(/@./.test(newUser.email)) ? <CloseOutlined /> : <CheckOutlined />
+                            }
+                            E-mail must be valid
+                        </Col>
+                    </Row>
+
+                    <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
+                        <Col xs = {12} style = {{color: (/[a-z]/.test(newUser.password)) ? "green" : "red"}}>
+                            {
+                                (/[a-z]/.test(newUser.password)) ? <CheckOutlined /> : <CloseOutlined />
+                            }
+                            Password contains letters
+                        </Col>
+                    </Row>
+
+                    <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
+                        <Col xs = {12} style = {{color: (/[0-9]/.test(newUser.password)) ? "green" : "red"}}>
+                            {
+                                (/[0-9]/.test(newUser.password)) ? <CheckOutlined /> : <CloseOutlined />
+                            }
+                            Password contains numbers
+                        </Col>
+                    </Row>
+
+                    <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
+                        <Col xs = {12} style = {{color: (/[^0-9a-z]/i.test(newUser.password)) ? "green" : "red"}}>
+                            {
+                                (/[^0-9a-z]/i.test(newUser.password)) ? <CheckOutlined /> : <CloseOutlined />
+                            }
+                            Password contains special characters
+                        </Col>
+                    </Row>
+
+                    <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
+                        <Col xs = {12} style = {{color: confirmPassword === newUser.password && newUser.password !== "" ? "green" : "red"}}>
+                            {
+                                confirmPassword === newUser.password && newUser.password !== "" ? <CheckOutlined /> : <CloseOutlined />
+                            }
+                            Confirm password matches password
+                        </Col>
+                    </Row>
+
+                </>}
+                    <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
+                        <Col xs = {12}>
+                            <Button
+                                type = "primary"
+                                icon = {<SaveOutlined />}
+                                onClick = {addNewUser}
+                            >Save</Button>
+                        </Col>
+                    </Row>
+
+                    <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center">
+                        {alert.show && alert.type === "error" && <Alert type = "error" message = {alert.message} />}
+                        {alert.show && alert.type === "success" && <Alert type = "success" message = {alert.message} />}
+                    </Row>
+            </form>
+        </>
     )
 }
 
