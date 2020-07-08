@@ -465,7 +465,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                     <Col span = {4}>Price</Col>
                     <Col span = {4}>Action</Col>
                 </Row>
-                <Collapse defaultActiveKey = {["1"]}>
+                <Collapse>
                     {
                         products.map((product: ProductInterface, index: number) => (
                             <Panel header = {(
