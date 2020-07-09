@@ -10,8 +10,8 @@ import config from "../routines/config";
 const Login: FunctionComponent<RouteComponentProps> = (props) => {
 
     // This states will store the fields
-    const [email, setEmail] = React.useState<string>("johnlennon@gmail.com");
-    const [password, setPassword] = React.useState<string>("yoko@123");
+    const [email, setEmail] = React.useState<string>("");
+    const [password, setPassword] = React.useState<string>("");
 
     // This will handle the success/error messages
     const [message, setMessage] = React.useState<{show: boolean, message: string}>({show: false, message: ""});
