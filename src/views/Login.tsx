@@ -9,10 +9,14 @@ import config from "../routines/config";
 
 const Login: FunctionComponent<RouteComponentProps> = (props) => {
 
+    // This states will store the fields
     const [email, setEmail] = React.useState<string>("johnlennon@gmail.com");
     const [password, setPassword] = React.useState<string>("yoko@123");
+
+    // This will handle the success/error messages
     const [message, setMessage] = React.useState<{show: boolean, message: string}>({show: false, message: ""});
 
+    // This will trigger when user tries to log in
     const login = async () => {
         const cryptPass = md5(password);
         const request: RequestInterface = {
@@ -32,14 +36,18 @@ const Login: FunctionComponent<RouteComponentProps> = (props) => {
 
         const response: ResponseInterface = await req.json();
         
+        // If response isn't valid
         if (!response.success) {
             setMessage({show: true, message: response.message});
-        } else {
-            localStorage.setItem("idLogin", response.params.idLogin);
-            localStorage.setItem("token", response.params.token);
-
-            props.history.push("/");
+            return false;
         }
+        
+        // If response is valid, set the idLogin and token in localStorage
+        localStorage.setItem("idLogin", response.params.idLogin);
+        localStorage.setItem("token", response.params.token);
+
+        // Redirect to home
+        props.history.push("/");
     }
     
     return (

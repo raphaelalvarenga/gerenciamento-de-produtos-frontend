@@ -7,6 +7,7 @@ import auth from "../routines/auth";
 import Logout from "../views/Logout";
 import AddProduct from "../views/AddProduct";
 
+// This component represents those routes that user must be logged in to navigate through
 const PrivateRoute = ({ component: Component, ...rest}: any) => (
     <Route
         {...rest}
@@ -18,6 +19,7 @@ const PrivateRoute = ({ component: Component, ...rest}: any) => (
     />
 )
 
+// These are the routes!
 const Routes: FunctionComponent = () => {
     return (
         <Switch>

@@ -2,6 +2,8 @@ import RequestInterface from "../interfaces/request-interface";
 import config from "./config";
 
 const logout = async () => {
+
+    // This is the request body
     const request: RequestInterface = {
         token: localStorage.getItem("token")!,
         action: "logout",
@@ -9,6 +11,7 @@ const logout = async () => {
         params: {}
     };
 
+    // This is the whole request
     const req = await fetch(`${config.url}/logout`, {
         method: "POST",
         headers: {
@@ -19,6 +22,7 @@ const logout = async () => {
 
     await req.json();
 
+    // Reseting token and idLogin
     localStorage.setItem("token", "");
     localStorage.setItem("idLogin", "0");
 }

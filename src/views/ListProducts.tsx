@@ -13,25 +13,32 @@ const { Panel } = Collapse;
 
 const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
+    // This state will store all products
     const [products, setProducts] = useState<ProductInterface[]>([]);
     
+    // This is used to ask user if he/she really wants to delete a register
     const [modal, setModal] = React.useState<{visible: boolean, product: ProductInterface}>({
         visible: false, product: {
             idProduct: 0, name: "", description: "", category: "", price: "", status: 0
         }});
 
+    // This is for the filter fields
     const [searchFields, setSearchFields] = React.useState<{name: string, description: string, category: string}>({
         name: "", description: "", category: ""
     });
 
+    // This will store the total products
     const [totalProducts, setTotalProducts] = React.useState<number>(1);
     
+    // When the page starts, the products must be loaded...
     useEffect(() => {
         getProducts(0)
     }, []);
 
+    // This function gets the products
     const getProducts = async (page: number) => {
 
+        // First let's get rid of any data already stored
         setProducts([]);
         
         const endpoint: string = config.url;
@@ -58,6 +65,8 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         });
 
         const response: ResponseInterface = await request.json();
+
+        // If the response is successful, the alert will feedback the user
         if (response.success) {
             const productsWithLabel: ProductInterface[] = (response.params.products as ProductInterface[]).map(
                 product => {
@@ -75,6 +84,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
             return false;
         }
         
+        // If the token has expired, redirect to /login page
         if (response.message === "Invalid-token") {
                 localStorage.setItem("token", "");
                 props.history.push("/login");
@@ -82,6 +92,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         }
     }
 
+    // This will trigger if user wants to edit a register
     const editProduct = async (product: ProductInterface) => {
         const {idProduct, name, description, category, price} = product;
 
@@ -111,6 +122,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         }
     }
 
+    // This will trigger if user wants to delete a register
     const deleteProduct = async (product: ProductInterface) => {
         const request: RequestInterface = {
             token: localStorage.getItem("token")!,

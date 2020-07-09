@@ -12,14 +12,21 @@ import logout from "../routines/logout";
 
 const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
 
+    // This state will store newUser's data, filled up in the form
     const [newUser, setNewUser] = React.useState<UserInterface>({
         idLogin: 0, name: "", email: "", password: ""
     });
 
+    // This state will to handle the confirm password field
     const [confirmPassword, setConfirmPassword] = React.useState<string>("");
+
+    // This state will handle the success/error messages
     const [alert, setAlert] = React.useState<{show: boolean, message: string, type: string}>({show: false, message: "", type: ""})
+
+    // This will appear when a request is made
     const [spin, setSpin] = React.useState<boolean>(false);
 
+    // This is triggered when use clicks on Save
     const addNewUser = async () => {
         const conditionals: boolean[] = [
             newUser.name === "",
@@ -30,11 +37,13 @@ const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
             !(confirmPassword === newUser.password && newUser.password !== "")
         ];
 
+        // If one of the conditions above is true...
         if (conditionals.includes(true)) {
             setAlert({show: true, type: "error", message: "Please, check the validations list!"})
             return false;
         }
 
+        // If everything is right, the request will be made and spin will appear
         setSpin(true);
 
         const {name, email, password} = newUser;
@@ -58,12 +67,14 @@ const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
 
         const response: ResponseInterface = await req.json();
 
+        // If the response is successful, the alert will feedback the user
         if (response.success) {
             setAlert({show: true, type: "success", message: "User created successfully!"})
             setSpin(false);
             return false;
         }
 
+        // If the token has expired, redirect to /login page
         if (response.message === "Invalid-token") {
             localStorage.setItem("token", "");
             props.history.push("/login");
@@ -71,6 +82,7 @@ const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
             return false;
         }
 
+        // Any other error, a message will appear
         setAlert({show: true, type: "error", message: response.message})
         setSpin(false);
     }

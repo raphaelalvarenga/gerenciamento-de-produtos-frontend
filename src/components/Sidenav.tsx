@@ -13,7 +13,7 @@ const Sidenav: FunctionComponent<any> = (props) => {
 
     return (
         <Drawer
-            title = "Hello, 'User'!"
+            title = "Welcome!"
             placement = "left"
             closable
             onClose = {() => setIsDrawerVisible(false)}

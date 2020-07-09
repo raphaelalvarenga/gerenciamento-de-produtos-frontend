@@ -12,16 +12,20 @@ import Sidenav from "../components/Sidenav";
 
 const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
 
+    // This state will store newProduct's data, filled up in the form
     const [newProduct, setNewProduct] = useState<ProductInterface>({
         idProduct: 0, name: "", description: "", category: "", price: "", status: 0
     });
 
+    // This state will handle the success/error messages
     const [alert, setAlert] = React.useState<{message: string, visible: boolean, type: string}>({
         message: "", visible: false, type: ""
     })
 
+    // This will appear when a request is made
     const [spin, setSpin] = React.useState<boolean>(false);
 
+    // This is triggered when use clicks on Save
     const addProduct = async () => {
         const conditionals: boolean[] = [
             newProduct.name === "",
@@ -30,11 +34,13 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
             newProduct.price === ""
         ];
 
+        // If one of the conditions above is true...
         if (conditionals.includes(true)) {
             setAlert({message: "Please, fill up the form!", visible: true, type: "error"});
             return false;
         }
 
+        // If everything is right, the request will be made and spin will appear
         setSpin(true);
 
         const request: RequestInterface = {
@@ -54,6 +60,7 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
 
         const response: ResponseInterface = await req.json();
 
+        // If the response is successful, the alert will feedback the user
         if (response.success) {
             setAlert({message: "Product has been saved successfully!", visible: true, type: "success"});
             setNewProduct({...newProduct, name: "", description: "", category: "", price: ""})
@@ -61,6 +68,7 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
             return false;
         }
 
+        // If the token has expired, redirect to /login page
         if (response.message === "Invalid-token") {
             localStorage.setItem("token", "");
             props.history.push("/login");
@@ -68,6 +76,7 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
             return false;
         }
         
+        // Any other error, a message will appear
         setAlert({message: "Something went wrong... contact the IT team.", visible: true, type: "error"});
         setSpin(false);
     }
