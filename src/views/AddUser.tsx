@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { Input, Row, Col, Button, Alert } from "antd";
+import { Input, Row, Col, Button, Alert, Spin } from "antd";
 import { UserOutlined, MailOutlined, LockOutlined, SaveOutlined, EyeTwoTone, EyeInvisibleOutlined, CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import UserInterface from "../interfaces/user-interface";
 import RequestInterface from "../interfaces/request-interface";
@@ -18,6 +18,7 @@ const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
 
     const [confirmPassword, setConfirmPassword] = React.useState<string>("");
     const [alert, setAlert] = React.useState<{show: boolean, message: string, type: string}>({show: false, message: "", type: ""})
+    const [spin, setSpin] = React.useState<boolean>(false);
 
     const addNewUser = async () => {
         const conditionals: boolean[] = [
@@ -33,6 +34,8 @@ const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
             setAlert({show: true, type: "error", message: "Please, check the validations list!"})
             return false;
         }
+
+        setSpin(true);
 
         const {name, email, password} = newUser;
 
@@ -57,16 +60,19 @@ const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
 
         if (response.success) {
             setAlert({show: true, type: "success", message: "User created successfully!"})
+            setSpin(false);
             return false;
         }
 
         if (response.message === "Invalid-token") {
             localStorage.setItem("token", "");
             props.history.push("/login");
+            setSpin(false);
             return false;
         }
 
         setAlert({show: true, type: "error", message: response.message})
+        setSpin(false);
     }
     
     return (
@@ -207,6 +213,14 @@ const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
                         {alert.show && alert.type === "success" && <Alert type = "success" message = {alert.message} />}
                     </Row>
             </form>
+
+            {
+                spin && <Row justify = "center">
+                    <Col>
+                        <Spin size = "large" />
+                    </Col>
+                </Row>
+            }
         </>
     )
 }
