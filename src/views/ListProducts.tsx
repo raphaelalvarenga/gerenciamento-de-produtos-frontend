@@ -235,6 +235,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                         <table style = {{maxWidth: "1200px", width: "100%"}}>
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Category</th>
@@ -247,6 +248,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 {
                                     products.map((product: ProductInterface, index: number) => (
                                         <tr style = {{backgroundColor: index % 2 === 0 ? "white" : "rgba(73, 144, 255, 0.1)"}}>
+                                            <td><img src = {require("../images/caravatar120x90.png")} /></td>
                                             <td>{product.name}</td>
                                             <td>{product.description}</td>
                                             <td>{product.category}</td>
