@@ -167,6 +167,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 name: e.target.value
                             })
                         }
+                        onPressEnter = {() => getProducts(0)}
                     />
                 </Col>
 
@@ -180,6 +181,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 description: e.target.value
                             })
                         }
+                        onPressEnter = {() => getProducts(0)}
                     />
                 </Col>
 
@@ -193,6 +195,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 category: e.target.value
                             })
                         }
+                        onPressEnter = {() => getProducts(0)}
                     />
                 </Col>
             </Row>

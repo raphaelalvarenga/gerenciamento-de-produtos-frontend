@@ -59,6 +59,7 @@ const Login: FunctionComponent<RouteComponentProps> = (props) => {
                         prefix = {<UserOutlined />}
                         value = {email}
                         onChange = {(e) => setEmail(e.target.value)}
+                        onPressEnter =  {login}
                     />
                     <Input.Password
                         placeholder = "Enter your password"
@@ -66,6 +67,7 @@ const Login: FunctionComponent<RouteComponentProps> = (props) => {
                         iconRender = {visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                         value = {password}
                         onChange = {(e) => setPassword(e.target.value)}
+                        onPressEnter = {login}
                     />
                     <Button type = "primary" onClick = {login}>Log in</Button>
 
