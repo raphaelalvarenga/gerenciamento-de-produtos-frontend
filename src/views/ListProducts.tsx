@@ -41,9 +41,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         // First let's get rid of any data already stored
         setProducts([]);
         
-        const endpoint: string = config.url;
-
-        const request = await fetch(endpoint, {
+        const request = await fetch(`${config.url}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -256,8 +254,9 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                             <td>
                                                 <Row gutter = {16}>
                                                     <Col>
-                                                        <Button>Edit</Button>
+                                                        <Link to = {`/product/${product.idProduct}`} component = {Button}>Edit</Link>
                                                     </Col>
+
                                                     <Col>
                                                         <Button
                                                             danger

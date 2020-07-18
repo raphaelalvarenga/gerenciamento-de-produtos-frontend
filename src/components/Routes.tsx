@@ -6,6 +6,7 @@ import AddUser from "../views/AddUser";
 import auth from "../routines/auth";
 import Logout from "../views/Logout";
 import AddProduct from "../views/AddProduct";
+import Product from "../views/Product";
 
 // This component represents those routes that user must be logged in to navigate through
 const PrivateRoute = ({ component: Component, ...rest}: any) => (
@@ -25,6 +26,7 @@ const Routes: FunctionComponent = () => {
         <Switch>
             <Route path = "/login" component = {Login} />
             <PrivateRoute exact path = "/" component = {ListProducts} />
+            <PrivateRoute exact path = "/product/:id" component = {Product} />
             <PrivateRoute path = "/add-product" component = {AddProduct} />
             <PrivateRoute path = "/add-user" component = {AddUser} />
             <Route path = "/logout" component = {Logout} />
