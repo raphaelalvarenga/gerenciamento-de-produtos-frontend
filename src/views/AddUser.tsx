@@ -8,7 +8,6 @@ import ResponseInterface from "../interfaces/response-interface";
 import md5 from "md5";
 import { RouteComponentProps } from "react-router-dom";
 import Toolbar from "../components/Toolbar";
-import logout from "../routines/logout";
 
 const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
 

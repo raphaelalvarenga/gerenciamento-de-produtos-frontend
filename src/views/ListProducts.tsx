@@ -2,14 +2,12 @@ import React, { useEffect, useState, FunctionComponent } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
 import config from "../routines/config";
-import { Button, Space, Input, Collapse, Pagination, Spin, Row, Col, Table } from "antd";
-import { SearchOutlined, DeleteOutlined, SaveOutlined } from "@ant-design/icons";
+import { Button, Input, Pagination, Spin, Row, Col } from "antd";
+import { SearchOutlined, DeleteOutlined } from "@ant-design/icons";
 import { RouteComponentProps, Link } from "react-router-dom";
 import RequestInterface from "../interfaces/request-interface";
 import Modal from "antd/lib/modal/Modal";
 import Toolbar from "../components/Toolbar";
-
-const { Panel } = Collapse;
 
 const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 
@@ -246,7 +244,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 {
                                     products.map((product: ProductInterface, index: number) => (
                                         <tr style = {{backgroundColor: index % 2 === 0 ? "white" : "rgba(73, 144, 255, 0.1)"}}>
-                                            <td><img src = {require("../images/caravatar120x90.png")} /></td>
+                                            <td><img src = {require("../images/caravatar120x90.png")} alt = "product-avatar" /></td>
                                             <td>{product.name}</td>
                                             <td>{product.description}</td>
                                             <td>{product.category}</td>

@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { PageHeader, Button, Row, Col } from "antd";
-import { MenuOutlined, PoweroffOutlined, CarOutlined, UserOutlined, OrderedListOutlined } from "@ant-design/icons";
+import { PoweroffOutlined, CarOutlined, UserOutlined, OrderedListOutlined } from "@ant-design/icons";
 
 const Toolbar: FunctionComponent<any> = (props) => {
     return <PageHeader

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import './assets/styles.css';
 import Routes from "./components/Routes";
-import { BrowserRouter, Link } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 const App: FunctionComponent = () => {
 
