@@ -88,36 +88,6 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         }
     }
 
-    // This will trigger if user wants to edit a register
-    const editProduct = async (product: ProductInterface) => {
-        const {idProduct, name, description, category, price} = product;
-
-        const request: RequestInterface = {
-            token: localStorage.getItem("token")!,
-            action: "editProduct",
-            idLogin: parseInt(JSON.stringify(localStorage.getItem("idLogin"))),
-            params: { idProduct, name, description, category, price}
-        }
-
-        const req = await fetch(`${config.url}/edit-product`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(request)
-        })
-
-        const response: ResponseInterface = await req.json();
-
-        if (response.success) {
-            setProducts(
-                products.map(
-                    productLoop => product === productLoop ? {...product, nameLabel: product.name} : productLoop
-                )
-            );
-        }
-    }
-
     // This will trigger if user wants to delete a register
     const deleteProduct = async (product: ProductInterface) => {
         const request: RequestInterface = {
@@ -243,7 +213,10 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                             <tbody>
                                 {
                                     products.map((product: ProductInterface, index: number) => (
-                                        <tr style = {{backgroundColor: index % 2 === 0 ? "white" : "rgba(73, 144, 255, 0.1)"}}>
+                                        <tr
+                                            style = {{backgroundColor: index % 2 === 0 ? "white" : "rgba(73, 144, 255, 0.1)"}}
+                                            key = {product.idProduct}
+                                        >
                                             <td><img src = {require("../images/caravatar120x90.png")} alt = "product-avatar" /></td>
                                             <td>{product.name}</td>
                                             <td>{product.description}</td>
@@ -252,7 +225,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                             <td>
                                                 <Row gutter = {16}>
                                                     <Col>
-                                                        <Link to = {`/product/${product.idProduct}`} component = {Button}>Edit</Link>
+                                                        <Link to = {`/product/${product.idProduct}`}><Button>Edit</Button></Link>
                                                     </Col>
 
                                                     <Col>
