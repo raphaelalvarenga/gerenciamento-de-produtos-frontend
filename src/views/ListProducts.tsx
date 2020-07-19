@@ -7,7 +7,6 @@ import { SearchOutlined, DeleteOutlined } from "@ant-design/icons";
 import { RouteComponentProps, Link } from "react-router-dom";
 import RequestInterface from "../interfaces/request-interface";
 import Modal from "antd/lib/modal/Modal";
-import Toolbar from "../components/Toolbar";
 
 const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
 

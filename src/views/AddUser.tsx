@@ -7,7 +7,6 @@ import config from "../routines/config";
 import ResponseInterface from "../interfaces/response-interface";
 import md5 from "md5";
 import { RouteComponentProps } from "react-router-dom";
-import Toolbar from "../components/Toolbar";
 
 const AddUser: FunctionComponent<RouteComponentProps> = (props) => {
 
