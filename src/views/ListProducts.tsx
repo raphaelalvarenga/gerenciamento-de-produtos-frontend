@@ -1,8 +1,8 @@
-import React, { useEffect, useState, FunctionComponent } from "react";
+import React, { useEffect, useState, FunctionComponent, useLayoutEffect } from "react";
 import ResponseInterface from "../interfaces/response-interface";
 import { ProductInterface } from "../interfaces/product-interface";
 import config from "../routines/config";
-import { Button, Input, Pagination, Spin, Row, Col } from "antd";
+import { Button, Input, Pagination, Spin, Row, Col, List } from "antd";
 import { SearchOutlined, DeleteOutlined } from "@ant-design/icons";
 import { RouteComponentProps, Link } from "react-router-dom";
 import RequestInterface from "../interfaces/request-interface";
@@ -27,9 +27,24 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
     // This will store the total products
     const [totalProducts, setTotalProducts] = React.useState<number>(1);
     
+    // This code is to make sure this screen is responsive
+    const [windowWidth, setWindowWidth] = useState(0);
+    
+    // This method will update the screen width
+    const resizeWindow = () => {
+        setWindowWidth(window.innerWidth);
+    };
+
     // When the page starts, the products must be loaded...
     useEffect(() => {
         getProducts(1)
+    }, []);
+
+    // Whether when the page loads or the use resizes it, it will get its own width
+    useEffect(() => {
+        resizeWindow();
+        window.addEventListener("resize", resizeWindow);
+        return () => window.removeEventListener("resize", resizeWindow);
     }, []);
 
     // This function gets the products
@@ -112,6 +127,95 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
             getProducts(1);
         }
     }
+
+    const printData = () => {
+        if (windowWidth < 600) {
+            return (
+                <List
+                    itemLayout = "horizontal"
+                    dataSource = {products}
+                    loading = {products.length > 0 ? false : true}
+                    renderItem = {(product: ProductInterface, index: number) => (
+                        <List.Item>
+                            <Row gutter = {16} justify = "space-around" align = "middle" style = {{width: "100%"}}>
+                                <Col>
+                                    <img src = {require("../images/caravatar120x90.png")} />
+                                </Col>
+                                <Col>
+                                    <Row><b>Name:</b>&nbsp;&nbsp;{product.name}</Row>
+                                    <Row><b>Description:</b>&nbsp;{product.description}</Row>
+                                    <Row><b>Category:</b>&nbsp;{product.category}</Row>
+                                    <Row><b>Price:</b>&nbsp;{product.price}</Row>
+                                    <Row gutter = {16}>
+                                        <Col>
+                                            <Link to = {`/product/${product.idProduct}`}><Button>Edit</Button></Link>
+                                        </Col>
+
+                                        <Col>
+                                            <Button
+                                                danger
+                                                icon = {<DeleteOutlined />}
+                                                onClick = {() => setModal({visible: true, product})}
+                                            />
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </List.Item>
+                    )}
+                />
+            )
+        }
+
+        return (
+            <>
+                <table style = {{maxWidth: "1200px", width: "100%"}}>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {
+                            products.map((product: ProductInterface, index: number) => (
+                                <tr
+                                    style = {{backgroundColor: index % 2 === 0 ? "white" : "rgba(73, 144, 255, 0.1)"}}
+                                    key = {product.idProduct}
+                                >
+                                    <td><img src = {require("../images/caravatar120x90.png")} alt = "product-avatar" /></td>
+                                    <td>{product.name}</td>
+                                    <td>{product.description}</td>
+                                    <td>{product.category}</td>
+                                    <td>{product.price}</td>
+                                    <td>
+                                        <Row gutter = {16}>
+                                            <Col>
+                                                <Link to = {`/product/${product.idProduct}`}><Button>Edit</Button></Link>
+                                            </Col>
+
+                                            <Col>
+                                                <Button
+                                                    danger
+                                                    icon = {<DeleteOutlined />}
+                                                    onClick = {() => setModal({visible: true, product})}
+                                                />
+                                            </Col>
+                                        </Row>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </>
+        )
+    }
     
     return (
         <>
@@ -188,62 +292,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
             </Row>
 
             <div style = {{maxWidth: "1200px", margin: "auto"}}>
-            {
-                products.length > 0 ? (
-                    <>
-                        <table style = {{maxWidth: "1200px", width: "100%"}}>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Category</th>
-                                    <th>Price</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {
-                                    products.map((product: ProductInterface, index: number) => (
-                                        <tr
-                                            style = {{backgroundColor: index % 2 === 0 ? "white" : "rgba(73, 144, 255, 0.1)"}}
-                                            key = {product.idProduct}
-                                        >
-                                            <td><img src = {require("../images/caravatar120x90.png")} alt = "product-avatar" /></td>
-                                            <td>{product.name}</td>
-                                            <td>{product.description}</td>
-                                            <td>{product.category}</td>
-                                            <td>{product.price}</td>
-                                            <td>
-                                                <Row gutter = {16}>
-                                                    <Col>
-                                                        <Link to = {`/product/${product.idProduct}`}><Button>Edit</Button></Link>
-                                                    </Col>
-
-                                                    <Col>
-                                                        <Button
-                                                            danger
-                                                            icon = {<DeleteOutlined />}
-                                                            onClick = {() => setModal({visible: true, product})}
-                                                        />
-                                                    </Col>
-                                                </Row>
-                                            </td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
-                    </>
-                ) : (
-                    <Row justify = "center">
-                        <Col>
-                            <Spin size = "large" />
-                        </Col>
-                    </Row>
-                )
-            }
+                {printData()}
             </div>
 
             
