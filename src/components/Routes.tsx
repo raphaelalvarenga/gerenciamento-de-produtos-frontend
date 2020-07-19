@@ -31,9 +31,7 @@ const Routes: FunctionComponent = (props: any) => {
     const [sidenav, setSidenav] = useState<boolean>(false);
 
     useEffect(() => {
-        if (!auth()) {
-            props.pageHeaderToggle(true)
-        }
+        !auth() ? props.pageHeaderToggle(true) : props.pageHeaderToggle(false);
     }, [])
     
     return (

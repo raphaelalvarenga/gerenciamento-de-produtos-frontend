@@ -74,8 +74,7 @@ const Product: FunctionComponent<RouteComponentProps> = (props) => {
         })
 
         const response: ResponseInterface = await req.json();
-        console.log(response);
-
+        
         response.success ?
             setAlert({show: true, message: "Product updated successfully", type: "success"})
             :
