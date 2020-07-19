@@ -58,7 +58,7 @@ const Login: FunctionComponent<RouteComponentProps> = (props) => {
     
     return (
         <>
-            <Card title = "Login" style = {{width: "500px", margin: "auto", marginTop: "50px"}}>
+            <Card title = "Login" style = {{width: "300px", margin: "auto", marginTop: "50px"}}>
                 <Space direction = "vertical" style = {{width: "100%"}}>
                     <Input
                         placeholder = "Enter your e-mail"
