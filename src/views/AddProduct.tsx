@@ -81,8 +81,8 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
     
     return (
         <>
-            <Row style = {{maxWidth: "1200px", margin: "40px auto 20px auto"}} justify = "center" gutter = {16}>
-                <Col flex = "300px">
+            <Row style = {{maxWidth: "1200px", marginBottom: "20px", marginTop: "20px"}} justify = "center">
+                <Col xs = {12}>
                     <Input
                         placeholder = "Name"
                         value = {newProduct.name}
@@ -94,8 +94,10 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
                         }
                     />
                 </Col>
+            </Row>
 
-                <Col flex = "300px">
+            <Row style = {{maxWidth: "1200px", marginBottom: "20px", marginTop: "20px"}} justify = "center">
+                <Col xs = {12}>
                     <Input
                         placeholder = "Description"
                         value = {newProduct.description}
@@ -108,7 +110,11 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
                     />
                 </Col>
 
-                <Col flex = "300px">
+            </Row>
+
+            <Row style = {{maxWidth: "1200px", marginBottom: "20px", marginTop: "20px"}} justify = "center">
+
+                <Col xs = {12}>
                     <Input
                         placeholder = "Category"
                         value = {newProduct.category}
@@ -121,7 +127,11 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
                     />
                 </Col>
 
-                <Col flex = "300px">
+            </Row>
+
+            <Row style = {{maxWidth: "1200px", marginBottom: "20px", marginTop: "20px"}} justify = "center">
+
+                <Col xs = {12}>
                     <Input
                         placeholder = "Price"
                         value = {newProduct.price}
@@ -135,27 +145,30 @@ const AddProduct: FunctionComponent<RouteComponentProps> = (props) => {
                 </Col>
             </Row>
 
-            <Row justify = "center" gutter = {16}>
-                <Col>
-                    <Button
-                        icon = {<SaveOutlined />}
-                        type = "primary"
-                        onClick = {addProduct}
-                    >Save</Button>
-                </Col>
-
-                <Col>
-                    <Button
-                        icon = {<DeleteOutlined />}
-                        danger
-                        onClick = {() => setNewProduct({
-                            ...newProduct,
-                            name: "",
-                            description: "",
-                            category: "",
-                            price: ""
-                        })}
-                    >Clean</Button>
+            <Row style = {{maxWidth: "1200px", marginBottom: "20px"}} justify = "center" gutter = {16}>
+                <Col xs = {12}>
+                    <Row gutter = {16}>
+                        <Col>
+                            <Button
+                                icon = {<SaveOutlined />}
+                                type = "primary"
+                                onClick = {addProduct}
+                            >Save</Button>
+                        </Col>
+                        <Col>
+                            <Button
+                                icon = {<DeleteOutlined />}
+                                danger
+                                onClick = {() => setNewProduct({
+                                    ...newProduct,
+                                    name: "",
+                                    description: "",
+                                    category: "",
+                                    price: ""
+                                })}
+                            >Clean</Button>
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
 
