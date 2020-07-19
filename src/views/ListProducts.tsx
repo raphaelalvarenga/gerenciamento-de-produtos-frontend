@@ -29,7 +29,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
     
     // When the page starts, the products must be loaded...
     useEffect(() => {
-        getProducts(0)
+        getProducts(1)
     }, []);
 
     // This function gets the products
@@ -52,7 +52,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                     "description": searchFields.description,
                     "category": searchFields.category,
                     "pagination": {
-                        "initialNumber": page,
+                        "initialNumber": (page - 1) * 10,
                         "finalNumber": 10
                     }
                 }
@@ -109,7 +109,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
         const response: ResponseInterface = await req.json();
 
         if (response.success) {
-            getProducts(0);
+            getProducts(1);
         }
     }
     
@@ -126,7 +126,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 name: e.target.value
                             })
                         }
-                        onPressEnter = {() => getProducts(0)}
+                        onPressEnter = {() => getProducts(1)}
                     />
                 </Col>
 
@@ -140,7 +140,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 description: e.target.value
                             })
                         }
-                        onPressEnter = {() => getProducts(0)}
+                        onPressEnter = {() => getProducts(1)}
                     />
                 </Col>
 
@@ -154,14 +154,14 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                                 category: e.target.value
                             })
                         }
-                        onPressEnter = {() => getProducts(0)}
+                        onPressEnter = {() => getProducts(1)}
                     />
                 </Col>
             </Row>
 
             <Row justify = "center" style = {{marginBottom: "40px"}} gutter = {16}>
                 <Col>
-                    <Button type = "primary" icon = {<SearchOutlined />} onClick = {() => getProducts(0)}>Search</Button>
+                    <Button type = "primary" icon = {<SearchOutlined />} onClick = {() => getProducts(1)}>Search</Button>
                 </Col>
 
                 <Col>
@@ -169,7 +169,7 @@ const ListProducts: FunctionComponent<RouteComponentProps> = (props) => {
                         icon = {<DeleteOutlined />}
                         onClick = {() => {
                             setSearchFields({name: "", description: "", category: ""});
-                            getProducts(0);
+                            getProducts(1);
                         }}
                         danger
                     >Clean</Button>
