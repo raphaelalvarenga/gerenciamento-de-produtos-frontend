@@ -6,6 +6,8 @@ import md5 from "md5";
 import ResponseInterface from "../interfaces/response-interface";
 import { RouteComponentProps } from "react-router-dom";
 import config from "../routines/config";
+import { connect } from "react-redux";
+import { pageHeaderToggle } from "../actions/PageHeaderAction";
 
 const Login: FunctionComponent<RouteComponentProps> = (props) => {
 
@@ -18,6 +20,7 @@ const Login: FunctionComponent<RouteComponentProps> = (props) => {
 
     // This will trigger when user tries to log in
     const login = async () => {
+        
         const cryptPass = md5(password);
         const request: RequestInterface = {
             token: "",
@@ -45,6 +48,9 @@ const Login: FunctionComponent<RouteComponentProps> = (props) => {
         // If response is valid, set the idLogin and token in localStorage
         localStorage.setItem("idLogin", response.params.idLogin);
         localStorage.setItem("token", response.params.token);
+
+        // Order the PageHeader to show
+        (props as any).pageHeaderToggle(true);
 
         // Redirect to home
         props.history.push("/");
@@ -78,4 +84,4 @@ const Login: FunctionComponent<RouteComponentProps> = (props) => {
     )
 }
 
-export default Login;
+export default connect(null, { pageHeaderToggle })(Login);
