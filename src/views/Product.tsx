@@ -120,6 +120,7 @@ const Product: FunctionComponent<RouteComponentProps> = (props) => {
                             <Input
                                 placeholder = "Insert the product description"
                                 value = {product.description}
+                                onChange = {(e) => setProduct({...product, description: e.target.value})}
                             />
                         </Col>
 
@@ -127,6 +128,7 @@ const Product: FunctionComponent<RouteComponentProps> = (props) => {
                             <Input
                                 placeholder = "Insert the product category"
                                 value = {product.category}
+                                onChange = {(e) => setProduct({...product, category: e.target.value})}
                             />
                         </Col>
 
@@ -134,6 +136,7 @@ const Product: FunctionComponent<RouteComponentProps> = (props) => {
                             <Input
                                 placeholder = "Insert the product price"
                                 value = {product.price}
+                                onChange = {(e) => setProduct({...product, price: e.target.value})}
                             />
                         </Col>
 
